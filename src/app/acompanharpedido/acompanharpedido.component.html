@@ -1,0 +1,139 @@
+<app-menu></app-menu>
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row>
+      <ion-col style="border-right: solid 1px rgb(212, 212, 212)">
+        <a (click)="link('/pedido')"
+          ><ion-icon name="bag-add-outline"></ion-icon
+        ></a>
+      </ion-col>
+      <ion-col>
+        <a disabled><ion-icon name="receipt-outline"></ion-icon></a>
+      </ion-col>
+      <ion-col style="border-left: solid 1px rgb(212, 212, 212)">
+        <a (click)="link('/carrinho')"
+          ><ion-icon name="cart-outline"></ion-icon
+        ></a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="th">
+    <ion-slides>
+      <ion-slide *ngIf="carregou">
+        <div class="form" *ngIf="produtos.length > 0">
+          <h2><b>Pedido Realizados</b></h2>
+          <hr />
+
+          <div *ngFor="let loja of lojas">
+            <h6 style="text-align: left">
+              <ion-icon
+                style="font-size: 20px"
+                name="storefront-outline"
+              ></ion-icon>
+              &nbsp;{{ loja.NM_FANTASIA }}
+            </h6>
+            <h6
+              style="text-align: right; margin-top: -35px"
+              type="button"
+              (click)="loja.esconder = !loja.esconder"
+            >
+              <ion-icon
+                *ngIf="!loja.esconder"
+                name="chevron-up-outline"
+              ></ion-icon>
+              <ion-icon
+                *ngIf="loja.esconder"
+                name="chevron-down-outline"
+              ></ion-icon>
+            </h6>
+
+            <div *ngIf="!loja.esconder">
+              <ion-card *ngFor="let pedidoCab of loja.pedidosCab">
+                <ion-card-header>
+                  <ion-card-title style="text-align: left">
+                    N° {{ pedidoCab.CD_PEDIDO }}
+                  </ion-card-title>
+                  <ion-card-title style="text-align: right; margin-top: -24px">
+                    STATUS:
+                    <ion-text
+                      *ngIf="pedidoCab.pedidosDet[0].entregue === false"
+                      color="warning"
+                    >
+                      PENDENTE
+                    </ion-text>
+                    <ion-text
+                      *ngIf="pedidoCab.pedidosDet[0].entregue === true"
+                      color="success"
+                    >
+                      ENTREGUE
+                    </ion-text>
+                  </ion-card-title>
+                  <br />
+                  <ion-row *ngFor="let pedidoDet of pedidoCab.pedidosDet">
+                    <ion-col size="7">
+                      <ion-card-subtitle style="font-size: 15px">
+                        {{ pedidoDet.nM_PRODUTO }}
+                      </ion-card-subtitle>
+                    </ion-col>
+                    <ion-col size="5">
+                      <ion-card-subtitle style="font-size: 30px">
+                        x{{ pedidoDet.qT_PRODUTO }}
+                      </ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-header>
+
+                <ion-card-content>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-card-subtitle>Pedido feito em:</ion-card-subtitle>
+                      <ion-card-subtitle>{{
+                        pedidoCab.pedidosDet[0].dataPedidoString
+                      }}</ion-card-subtitle>
+                    </ion-col>
+                    <ion-col size="6">
+                      <div *ngIf="pedidoCab.pedidosDet[0].entregue === false">
+                        <ion-card-subtitle
+                          >Entrega prevista para:</ion-card-subtitle
+                        >
+                        <ion-card-subtitle>{{
+                          pedidoCab.pedidosDet[0].dataPrevistaString
+                        }}</ion-card-subtitle>
+                      </div>
+                      <div *ngIf="pedidoCab.pedidosDet[0].entregue === true">
+                        <ion-card-subtitle>Entregue dia:</ion-card-subtitle>
+                        <ion-card-subtitle>{{
+                          pedidoCab.pedidosDet[0].dataEntregaString
+                        }}</ion-card-subtitle>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+              <hr />
+              <hr />
+            </div>
+          </div>
+        </div>
+        <div class="ion-text-center" *ngIf="produtos.length === 0">
+          <ion-icon
+            name="help-circle-outline"
+            style="font-size: 250px; margin-top: 30%"
+          ></ion-icon>
+          <br />
+          <ion-text style="font-size: 20px"
+            >Nenhum pedido realizado, <br />
+            faça seu primeiro pedido em <br />
+            Novo Pedido</ion-text
+          >
+        </div>
+      </ion-slide>
+      <ion-slide *ngIf="!carregou">
+        <div style="margin-top: 500px">
+          <app-spinner></app-spinner>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>
+<app-footer></app-footer>

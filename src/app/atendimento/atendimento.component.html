@@ -1,0 +1,39 @@
+<div id="numero">
+  <ion-list>
+    <ion-accordion-group #accordionGroup >
+      <ion-accordion value="sexto">
+        <ion-item slot="header" color="light" href="./problemapedido">
+          <ion-label>Problemas com Pedido</ion-label>
+        </ion-item>
+      </ion-accordion>
+      <ion-accordion value="primeiro">
+        <ion-item slot="header" color="light">
+          <ion-label>Central de Atendimento</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-button href="tel:+1120362035">
+            <b>(11) 20362035</b>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+            <ion-icon slot="end" name="call-outline"></ion-icon>
+          </ion-button>
+          <p>Horário de funcionamento de segunda a sexta das <br><b>09:00 às 18:00</b></p>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="quinto">
+        <ion-item slot="header" color="light">
+          <ion-label>Suporte</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-button href="mailto:dev01@senhorcaixa.com.br">
+            <b>Enviar E-mail</b>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
+              <ion-icon slot="end" name="mail-outline"></ion-icon>
+          </ion-button>
+          <p>Seu retorno será no próximo dia útil.</p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-list>
+</div>
+
+<app-footer></app-footer>

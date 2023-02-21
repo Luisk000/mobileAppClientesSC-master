@@ -1,0 +1,45 @@
+<app-menu></app-menu>
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row>
+      <ion-col style="border-right: solid 1px">
+        <a (click)="etapa = 1"><ion-icon name="bag-add-outline"></ion-icon></a>
+      </ion-col>
+      <ion-col>
+        <a (click)="link('/acompanharpedido')"><ion-icon name="receipt-outline"></ion-icon></a>
+      </ion-col>
+      <ion-col style="border-left: solid 1px">
+        <a (click)="link('/carrinho')"><ion-icon name="cart-outline"></ion-icon></a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-slides>
+    <ion-slide>
+      <div class="form">
+        <app-selecionarloja
+          *ngIf="etapa === 1"
+          (lojaSelecionada)="receberProdutos($event)"
+        ></app-selecionarloja>
+        <app-selecionarproduto
+          *ngIf="etapa === 2"
+          [produtos]="produtos"
+          (produtoSelecionado)="receberProdutoSelecionado($event)"
+        ></app-selecionarproduto>
+        <app-adquirirproduto
+          *ngIf="etapa === 3"
+          [produtoSelecionado]="produtoSelecionado"
+          (produtoConfirmado)="this.etapa = 1"
+        ></app-adquirirproduto>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Carregando..."
+          >
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<app-footer></app-footer>

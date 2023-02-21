@@ -1,0 +1,31 @@
+
+  <ion-card style="margin-top: 60px" *ngIf="carregou">
+    <ion-card-header>
+      <img
+      class="full-img"
+      alt="Silhouette of mountains"
+      src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
+    />
+    <ion-card-title style="font-size: 24px; margin: 12px;">
+      {{produtoSelecionado.nM_PRODUTO}}
+    </ion-card-title>
+    <ion-card-subtitle>
+      {{produtoSelecionado.nM_FANTASIA}}
+    </ion-card-subtitle>
+    </ion-card-header>
+
+      <ion-card-content style="margin-bottom: 60px">
+        <hr>
+        <ion-label>Qt. Caixas: </ion-label>
+        <ion-input placeholder="Digite aqui a quantidade de caixas" type="number"
+          [(ngModel)]="quantidade" (ngModelChange)="validarQuantidade($event)"></ion-input>
+        <ion-label>Qt. Embalagens: </ion-label>
+        <ion-input placeholder="Cada embalagem possui {{produtoSelecionado.qT_QTDENAEMBALAGEM}} caixas" type="number"
+          [(ngModel)]="quantidadeEmbalagem" (ngModelChange)="validarQuantidadeEmbalagem($event)"></ion-input>
+        <hr>
+        <ion-button [disabled]="!valid" (click)="confirmar()">Confirmar</ion-button>
+      </ion-card-content>
+
+  </ion-card>
+  <ion-spinner *ngIf="!carregou"></ion-spinner>
+

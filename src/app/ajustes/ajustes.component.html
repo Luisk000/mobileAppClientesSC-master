@@ -1,0 +1,39 @@
+<div id="numero">
+  <ion-list>
+    <ion-accordion-group #accordionGroup >
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>Alterar Senha</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-input placeholder="Digite o senha atual" [(ngModel)]="senhaAntiga"></ion-input>
+        </div>
+        <div class="ion-padding" slot="content">
+          <ion-input placeholder="Digite o nova senha" [(ngModel)]="senhaNova"></ion-input>
+        </div>
+        <div class="ion-padding" slot="content">
+          <ion-button (click)="alterarSenha()">Confirmar</ion-button>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="second">
+        <ion-item slot="header" color="light">
+          <ion-label>Alterar E-mail</ion-label>
+        </ion-item>
+        <div class="ion-padding"  slot="content">
+          <ion-input placeholder="Digite o novo E-mail"></ion-input>
+        </div>
+        <div class="ion-padding" slot="content">
+          <ion-button (click)="alterarEmail()">Confirmar</ion-button>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="sexto" toggleIcon="" >
+        <ion-item id="tamElemento" slot="header" color="light">
+          <ion-button (click)="logout()"><b>Sair</b> <ion-icon slot="end" style="margin-top: -2px" name="exit-outline"></ion-icon></ion-button>
+        </ion-item>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-list>
+</div>
+
+<app-footer></app-footer>

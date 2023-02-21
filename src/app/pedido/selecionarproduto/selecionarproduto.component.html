@@ -1,0 +1,34 @@
+<div class="top"  *ngIf="produtos.length > 0">
+  <h2><b>Selecione o produto</b></h2>
+  <ion-card
+    *ngFor="let produto of produtos"
+    (click)="selecionarProduto(produto)"
+  >
+    <ion-card-header>
+      <ion-row>
+        <ion-col size="3">
+          <img
+            alt="Silhouette of mountains"
+            src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
+          />
+        </ion-col>
+        <ion-col size="9">
+          <ion-card-title>{{ produto.nM_PRODUTO }}</ion-card-title>
+          <ion-card-subtitle>
+            {{ produto.nM_FANTASIA }}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content>
+      Here's a small text description for the card content. Nothing more,
+      nothing less.
+    </ion-card-content>
+  </ion-card>
+</div>
+<div class="ion-text-center" *ngIf="produtos.length === 0">
+  <ion-icon name="help-circle-outline" style="font-size: 250px; margin-top: 30%"></ion-icon>
+  <br>
+  <ion-text style="font-size: 20px;">Nenhum produto disponível <br> para esta loja</ion-text>
+</div>

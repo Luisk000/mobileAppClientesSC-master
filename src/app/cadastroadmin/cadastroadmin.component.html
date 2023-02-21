@@ -1,0 +1,63 @@
+<ion-content *ngIf='carregou'>
+  <ion-list class="form">
+    <form [formGroup]="userRegister" (ngSubmit)="criarUsuario()">
+      <ion-item>
+        <ion-label position="floating">Rede Loja</ion-label>
+        <ion-input
+          type="text"
+          formControlName="rede"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input
+          type="text"
+          formControlName="nome"
+          placeholder="Digite o Nome"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">CPF</ion-label>
+        <ion-input
+          type="text"
+          formControlName="cpf"
+          placeholder="CPF sem pontos ou traços"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input
+          type="text"
+          formControlName="email"
+          placeholder="Nome de usuário para o acesso do app"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input
+          [type]="isTextFieldType ? 'text' : 'password'"
+          formControlName="senha"
+          placeholder="Senha para o acesso do app"
+        ></ion-input>
+        <ion-icon
+          slot="end"
+          class="olho"
+          (click)="togglePasswordFieldType()"
+          [name]="isTextFieldType ? 'eye-off' : 'eye'"
+        ></ion-icon>
+      </ion-item>
+      <ion-button [disabled]="!userRegister.valid" class="buttoncenter" type="submit"><b>Cadastrar</b></ion-button>
+    </form>
+  </ion-list>
+  <ion-back-button></ion-back-button>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Carregando..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<app-footer></app-footer>

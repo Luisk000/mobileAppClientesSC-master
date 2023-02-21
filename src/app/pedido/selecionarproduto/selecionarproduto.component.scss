@@ -1,0 +1,44 @@
+ion-grid{
+  border: none;
+  text-align: center;
+  position: fixed;
+  top: 60;
+  width: 100%;
+  z-index: 99;
+  transition: all .5s;
+}
+h2{
+  margin-top: 80px;
+}
+ion-label{
+  font-size: 15px !important;
+}
+.form{
+  width: 90%;
+}
+ion-list{
+  height: 300px;
+}
+.top{
+  margin-top: 60px;
+}
+p{
+  text-align: center;
+  font-size: 14px;
+}
+.img-col{
+  margin-right:10px;
+  margin-bottom: 10px;
+}
+.img{
+  height: 50px;
+  margin-left: -50px;
+  margin-right: -50px;
+}
+.full-img{
+  height: 250px;
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+

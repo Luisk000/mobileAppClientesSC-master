@@ -1,0 +1,31 @@
+<div *ngIf="carregou">
+    <div style="margin-bottom: 40px">
+      <h2><b>Selecione a Loja</b></h2>
+    </div>
+
+    <ion-row>
+      <ion-col class="img-col" size="5.6" *ngFor="let cliente of clientes">
+        <ion-img
+          (click)="selecionarLoja(cliente)"
+          class="img"
+          src="../../assets/loja.png"
+        ></ion-img>
+        <p (click)="selecionarLoja(cliente)">{{ cliente.nM_FANTASIA }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-infinite-scroll threshold="100px" *ngIf="!carregou">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Carregando"
+      >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <div *ngIf="!carregou">
+    <div style="margin-top: 500px">
+      <app-spinner></app-spinner>
+    </div>
+  </div>
+
+
+

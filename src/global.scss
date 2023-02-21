@@ -1,0 +1,74 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+//@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+@import './theme/variables.scss';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Mochiy+Pop+P+One&display=swap');
+
+*{
+  font-family: 'Roboto', sans-serif;
+}
+
+
+ion-accordion ion-item {
+  //background-color: white !important;
+  height: 40px;
+}
+
+
+ion-icon{
+  margin-top: -10px;
+}
+
+
+button.alert-button-cancel{
+  color: #eb445a !important;
+}
+
+button.alert-button-confirm{
+  color: #2dd36f !important;
+}
+
+
+button.alert-button-main{
+  color: #3dc2ff !important;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  button.alert-button-cancel{
+    color: #ff4961 !important;
+  }
+
+  button.alert-button-confirm{
+    color: #2fdf75 !important;
+  }
+
+
+  button.alert-button-main{
+    color: #50c8ff !important;
+  }
+
+}
