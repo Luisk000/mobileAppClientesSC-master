@@ -3,8 +3,7 @@
     <ion-card-header>
       <img
       class="full-img"
-      alt="Silhouette of mountains"
-      src="https://ionicframework.com/docs/img/demos/thumbnail.svg"
+      [src]="produtoSelecionado.imagem"
     />
     <ion-card-title style="font-size: 24px; margin: 12px;">
       {{produtoSelecionado.nM_PRODUTO}}

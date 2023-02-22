@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Produto } from './../model/produto.model';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UrlServiceService } from './url-service.service';
@@ -25,21 +25,14 @@ export class ProdutoService {
     return this.http.post<Produto[]>(`${this.url}/${'GetPedidosPendentes'}`, body);
   }
 
-  getImagem(produto: Produto): Observable<HttpEvent<Blob>> {
+  getImagem(produto: Produto) {
     const body = {
       CD_CLIENTE: produto.cD_CLIENTE,
-      CD_PEDIDO: produto.cD_PEDIDO
-    };
-      return this.http.request(new HttpRequest(
-        'GET',
-        `${this.url}/GetImage`,
-        body,
-        {
-          reportProgress: true,
-          responseType: 'blob'
-        }));
+      CD_PEDIDO: produto.cD_PRODUTO
     }
+
+    let horde = new HttpHeaders();
+    horde = horde.set('Accept', 'image/jpeg');
+    return this.http.post(this.url + "/GetImage", body, { headers: horde, responseType: "blob" })
   }
-
-
-
+}

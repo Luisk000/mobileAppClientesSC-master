@@ -10,6 +10,7 @@ export interface Produto{
   qT_PRODUTO?: number;
   dT_PEDIDO: Date;
   dT_ENTREGA?: Date;
+  imagem: any;
 
   dataPrevistaString: string;
   dataPedidoString: string;
