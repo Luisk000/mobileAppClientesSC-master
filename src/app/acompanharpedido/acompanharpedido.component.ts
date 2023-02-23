@@ -20,7 +20,7 @@ import { Cliente } from '../model/cliente.models';
   templateUrl: './acompanharpedido.component.html',
   styleUrls: ['./acompanharpedido.component.scss'],
 })
-export class AcompanharpedidoComponent implements OnInit {
+export class AcompanharpedidoComponent {
   carregou = false;
   itensPage: any = [];
   produtos: Produto[];
@@ -37,8 +37,14 @@ export class AcompanharpedidoComponent implements OnInit {
     private datePipe: DatePipe,
     private alertController: AlertController,
     private lojaService: LojaService
-  ) {
+  ) { }
 
+  ionViewWillEnter(){
+    this.start();
+  }
+
+  start(){
+    this.carregou = false;
     this.produtoService.getPedidosPendentes().subscribe((data) => {
       if (data.toString().includes('Erro')) {
         this.erroOcorrido();
@@ -57,10 +63,6 @@ export class AcompanharpedidoComponent implements OnInit {
         });
       }
     });
-
-  }
-
-  ngOnInit() {
   }
 
   separarPedidos(clientes: Cliente[]){

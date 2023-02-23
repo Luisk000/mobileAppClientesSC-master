@@ -16,7 +16,7 @@ import { DataUrl, NgxImageCompressService } from 'ngx-image-compress';
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss'],
 })
-export class CarrinhoComponent implements OnInit {
+export class CarrinhoComponent {
   carregou = false;
 
   constructor(
@@ -36,7 +36,7 @@ export class CarrinhoComponent implements OnInit {
   pedidosCarrinho: PedidoCarrinho[];
   subscription: Subscription;
 
-  ngOnInit() {
+  ionViewWillEnter(){
     this.start();
   }
 
