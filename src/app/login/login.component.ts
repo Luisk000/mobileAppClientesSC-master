@@ -68,9 +68,9 @@ export class LoginComponent implements OnInit {
       largeBody: "largeBodyTeste",
       schedule: {
         repeats: true,
-        every: 'week',
+        every: 'hour',
         on: {
-          day: 2
+          hour: 18
         }
       }
     }

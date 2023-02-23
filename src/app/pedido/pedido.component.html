@@ -29,7 +29,7 @@
         <app-adquirirproduto
           *ngIf="etapa === 3"
           [produtoSelecionado]="produtoSelecionado"
-          (produtoConfirmado)="this.etapa = 1"
+          (produtoConfirmado)="this.etapa = 2"
         ></app-adquirirproduto>
         <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
           <ion-infinite-scroll-content

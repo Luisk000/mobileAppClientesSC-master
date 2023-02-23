@@ -1,9 +1,14 @@
-
+<div *ngIf="fullImg">
+  <img class="fullscreen" [src]="produtoSelecionado.imagem" (click)="fullImg = false"/>
+  <p>Clique na imagem para voltar</p>
+</div>
+<div *ngIf="!fullImg">
   <ion-card style="margin-top: 60px" *ngIf="carregou">
     <ion-card-header>
       <img
       class="full-img"
       [src]="produtoSelecionado.imagem"
+      (click)="fullImg = true"
     />
     <ion-card-title style="font-size: 24px; margin: 12px;">
       {{produtoSelecionado.nM_PRODUTO}}
@@ -27,4 +32,4 @@
 
   </ion-card>
   <ion-spinner *ngIf="!carregou"></ion-spinner>
-
+</div>

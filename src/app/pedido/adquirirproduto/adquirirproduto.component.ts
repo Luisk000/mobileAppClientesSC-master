@@ -15,6 +15,7 @@ export class AdquirirprodutoComponent implements OnInit {
   @Output() produtoConfirmado = new EventEmitter();
   valid = false;
   carregou = true;
+  fullImg = false;
   quantidade: number;
   quantidadeEmbalagem: number;
 

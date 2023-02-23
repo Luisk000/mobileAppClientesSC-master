@@ -4,6 +4,7 @@ import { ProdutoService } from './../../services/produto.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Produto } from 'src/app/model/produto.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DataUrl, NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-selecionarproduto',
@@ -11,22 +12,47 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./selecionarproduto.component.scss'],
 })
 export class SelecionarprodutoComponent implements OnInit {
-
   @Output() produtoSelecionado = new EventEmitter<Produto>();
   @Input() produtos: Produto[];
 
-  constructor(private produtoService: ProdutoService, private sanitizer: DomSanitizer) { }
+  constructor(
+    private produtoService: ProdutoService,
+    private sanitizer: DomSanitizer,
+    private imageCompress: NgxImageCompressService
+  ) {}
 
   ngOnInit() {
-    for (let produto of this.produtos){
+    for (let produto of this.produtos) {
       this.produtoService.getImagem(produto).subscribe((data) => {
         let objectURL = URL.createObjectURL(data);
-        produto.imagem = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      })
+        //const imagem: any = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+        this.imageCompress
+          .compressFile(objectURL, 0, 50, 50, 0, 0)
+          .then((result: DataUrl) => {
+            produto.imagem = result;
+          });
+      });
     }
   }
 
-  selecionarProduto(produto: Produto){
+  selecionarProduto(produto: Produto) {
     this.produtoSelecionado.emit(produto);
   }
+
+  getImages(){
+    for (let produto of this.produtos) {
+      this.produtoService.getImagem(produto).subscribe((data) => {
+        let objectURL = URL.createObjectURL(data);
+        //const imagem: any = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+        this.imageCompress
+          .compressFile(objectURL, 0, 50, 50, 0, 0)
+          .then((result: DataUrl) => {
+            produto.imagem = result;
+          });
+      });
+    }
+  }
+
 }

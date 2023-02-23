@@ -1,3 +1,4 @@
+import { ProdutoService } from './../services/produto.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/type-annotation-spacing */
@@ -7,6 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PedidoCarrinho } from '../model/pedidocarrinho.model';
 import { Observable, Subscription } from 'rxjs';
+import { Produto } from '../model/produto.model';
+import { DataUrl, NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-carrinho',
@@ -21,7 +24,9 @@ export class CarrinhoComponent implements OnInit {
     private route: ActivatedRoute,
     private carrinhoService: CarrinhoService,
     private alertController: AlertController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private produtoService: ProdutoService,
+    private imageCompress: NgxImageCompressService
   ) {
     route.params.subscribe(() => {
       this.start();
@@ -43,8 +48,10 @@ export class CarrinhoComponent implements OnInit {
       }
       else{
         this.pedidosCarrinho = data;
+        for (let pedido of this.pedidosCarrinho){
+          this.getImages(pedido.produtosCarrinho);
+        }
         this.carregou = true;
-        console.log(this.pedidosCarrinho);
       }
     });
   }
@@ -154,5 +161,20 @@ export class CarrinhoComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  getImages(produtos: Produto[]){
+    for (let produto of produtos) {
+      this.produtoService.getImagem(produto).subscribe((data) => {
+        let objectURL = URL.createObjectURL(data);
+        //const imagem: any = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+
+        this.imageCompress
+          .compressFile(objectURL, 0, 50, 50, 60, 60)
+          .then((result: DataUrl) => {
+            produto.imagem = result;
+          });
+      });
+    }
   }
 }

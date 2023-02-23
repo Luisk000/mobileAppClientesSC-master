@@ -25,14 +25,14 @@
           <hr />
 
           <div *ngFor="let loja of lojas">
-            <h6 style="text-align: left">
+            <h3 style="text-align: left">
               <ion-icon
                 style="font-size: 20px"
                 name="storefront-outline"
               ></ion-icon>
               &nbsp;{{ loja.NM_FANTASIA }}
-            </h6>
-            <h6
+            </h3>
+            <h3
               style="text-align: right; margin-top: -35px"
               type="button"
               (click)="loja.esconder = !loja.esconder"
@@ -45,7 +45,7 @@
                 *ngIf="loja.esconder"
                 name="chevron-down-outline"
               ></ion-icon>
-            </h6>
+            </h3>
 
             <div *ngIf="!loja.esconder">
               <ion-card *ngFor="let pedidoCab of loja.pedidosCab">

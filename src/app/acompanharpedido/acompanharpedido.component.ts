@@ -25,6 +25,7 @@ export class AcompanharpedidoComponent implements OnInit {
   itensPage: any = [];
   produtos: Produto[];
   lojas: LojaPedido[] = [];
+  produtoMaisRecente: number;
 
   private index: number = 0;
   private readonly offset: number = 12;
@@ -52,7 +53,6 @@ export class AcompanharpedidoComponent implements OnInit {
             this.formatarDatas();
             this.separarPedidos(clientes);
             this.carregou = true;
-            console.log(this.lojas);
           }
         });
       }
@@ -77,6 +77,7 @@ export class AcompanharpedidoComponent implements OnInit {
       ids = ids.filter((value, index) => ids.indexOf(value) === index);
 
       if (ids.length !== 0){
+
         for (let id of ids){
           const pedidoCab = new PedidoCab();
           pedidoCab.CD_PEDIDO = id;
@@ -87,9 +88,13 @@ export class AcompanharpedidoComponent implements OnInit {
 
           lojaPedido.pedidosCab.push(pedidoCab);
         }
+
+        lojaPedido.pedidosCab.sort((a,b) => b.CD_PEDIDO - a.CD_PEDIDO);
+        lojaPedido.pedidoMaisRecente = lojaPedido.pedidosCab[0].CD_PEDIDO;
         this.lojas.push(lojaPedido);
       }
     }
+    this.lojas.sort((a,b) => b.pedidoMaisRecente - a.pedidoMaisRecente);
   }
 
   loadData(event) {

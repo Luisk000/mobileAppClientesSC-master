@@ -8,4 +8,5 @@ export class LojaPedido {
   NM_FANTASIA: string;
   pedidosCab: PedidoCab[];
   esconder: boolean = false;
+  pedidoMaisRecente: number;
 }
