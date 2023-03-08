@@ -68,14 +68,15 @@ export class LoginComponent implements OnInit {
       largeBody: "largeBodyTeste",
       schedule: {
         repeats: true,
-        every: 'hour',
-        on: {
-          hour: 18
-        }
+        every: "day"
+       /*  on: {
+          weekday: 4,
+          hour: 15,
+          minute: 0,
+          second: 1
+        } */
       }
     }
     LocalNotifications.schedule({notifications:[options]})
   }
-
-
 }

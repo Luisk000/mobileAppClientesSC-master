@@ -33,6 +33,7 @@ import { LoginModule } from './login/login.module';
 import { LoginComponent } from './login/login.component';
 import { CadastroadminComponent } from './cadastroadmin/cadastroadmin.component';
 import { DatePipe } from '@angular/common';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { DatePipe } from '@angular/common';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FormBuilder,
     DatePipe,
+    NgxImageCompressService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],

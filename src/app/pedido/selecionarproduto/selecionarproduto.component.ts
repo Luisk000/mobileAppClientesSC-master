@@ -22,35 +22,31 @@ export class SelecionarprodutoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    for (let produto of this.produtos) {
-      this.produtoService.getImagem(produto).subscribe((data) => {
-        let objectURL = URL.createObjectURL(data);
-        //const imagem: any = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-
-        this.imageCompress
-          .compressFile(objectURL, 0, 50, 50, 0, 0)
-          .then((result: DataUrl) => {
-            produto.imagem = result;
-          });
-      });
-    }
+   this.getImages();
   }
 
   selecionarProduto(produto: Produto) {
     this.produtoSelecionado.emit(produto);
   }
 
+  imgResultBeforeCompression: string = '';
+  imgResultAfterCompression: string = '';
   getImages(){
     for (let produto of this.produtos) {
       this.produtoService.getImagem(produto).subscribe((data) => {
-        let objectURL = URL.createObjectURL(data);
-        //const imagem: any = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+/*         if (data != undefined && data != null){
+          let objectURL = URL.createObjectURL(data);
+          //const imagem: any = this.sanitizer.bypassSecurityTrustUrl(objectURL);
 
-        this.imageCompress
-          .compressFile(objectURL, 0, 50, 50, 0, 0)
-          .then((result: DataUrl) => {
-            produto.imagem = result;
-          });
+          this.imageCompress
+            .compressFile(objectURL, -1, 50, 50)
+            .then((result: DataUrl) => {
+              produto.imagem = result;
+            });
+        }
+        else{ */
+          produto.imagem = "../../../assets/imagem-nao-encontrada.jpg";
+        //}
       });
     }
   }
