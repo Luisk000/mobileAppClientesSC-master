@@ -28,8 +28,7 @@ export class LoginComponent implements OnInit {
     this.ScheduleNotification();
   }
   public async login() {
-    await this.authService.login(this.model)
-      .subscribe(
+    await this.authService.login(this.model).subscribe(
         () => {
 
           // eslint-disable-next-line no-debugger
