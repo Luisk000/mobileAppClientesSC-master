@@ -1,6 +1,6 @@
 import { UrlServiceService } from './url-service.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './../interfaces/user';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -25,6 +25,15 @@ export class AuthService {
     editando: false
   };
 
+  httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'*',
+        'Access-Control-Allow-Headers':'*',
+        'Access-Control-Allow-Credentials': 'true'
+    })
+  }
 
 constructor(
   private httpCliente: HttpClient,
@@ -77,11 +86,11 @@ loggedIn(){
   return !this.jwtHelper.isTokenExpired(token);
 }
 register(usuario: User){
-  return this.httpCliente.post<User>(`${this.baseUrl}/criar`,usuario);
+  return this.httpCliente.post<User>(`${this.baseUrl}/criar`,usuario, this.httpOptions);
 }
 login(model: any) {
   return this.httpCliente
-    .post(`${this.baseUrl}/login`, model).pipe(
+    .post(`${this.baseUrl}/login`, model, this.httpOptions).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
@@ -108,7 +117,7 @@ relogin(){
       userName: decodedDetails.unique_name
     };
   this.httpCliente
-    .post(`${this.baseUrl}/Relogin`, model).pipe(
+    .post(`${this.baseUrl}/Relogin`, model, this.httpOptions).pipe(
       map((response: any) => {
         const user = response;
         console.log(response);

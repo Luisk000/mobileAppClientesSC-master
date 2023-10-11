@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Cliente } from '../model/cliente.models';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user';
@@ -14,8 +14,18 @@ export class UsuarioService {
 
 constructor(private http: HttpClient, private urlService: UrlServiceService) { }
 
+httpOptions = {
+  headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Methods':'*',
+      'Access-Control-Allow-Headers':'*',
+      'Access-Control-Allow-Credentials': 'true'
+  })
+}
+
   getId(): Observable<number>{
-    return this.http.get<number>(`${this.baseUrl}/GetId/`);
+    return this.http.get<number>(`${this.baseUrl}/GetId/`, this.httpOptions);
   }
 
   getUsers(){
@@ -23,11 +33,11 @@ constructor(private http: HttpClient, private urlService: UrlServiceService) { }
       Cpf: localStorage.getItem('cpf'),
       RedeLoja: localStorage.getItem('redeloja')
     };
-    return this.http.post<User[]>(`${this.baseUrl}/GetAllUsers`, body);
+    return this.http.post<User[]>(`${this.baseUrl}/GetAllUsers`, body, this.httpOptions);
   }
 
   changeUser(cpf: string){
-    return this.http.get<User>(`${this.baseUrl}/ChangeUser/${cpf}`);
+    return this.http.get<User>(`${this.baseUrl}/ChangeUser/${cpf}`, this.httpOptions);
   }
 
   criar(funcionario: User, clientes: Cliente[]): Observable<string> {
@@ -40,7 +50,7 @@ constructor(private http: HttpClient, private urlService: UrlServiceService) { }
       roleName: 'funcionario',
       clientes
     };
-    return this.http.post<string>(`${this.baseUrl}/criar/`, body);
+    return this.http.post<string>(`${this.baseUrl}/criar/`, body, this.httpOptions);
   }
 
   criarAdmin(funcionario: User): Observable<string> {
@@ -52,7 +62,7 @@ constructor(private http: HttpClient, private urlService: UrlServiceService) { }
       newPassword: funcionario.passwordHash,
       roleName: 'admin'
     };
-    return this.http.post<string>(`${this.baseUrl}/criar/`, body);
+    return this.http.post<string>(`${this.baseUrl}/criar/`, body, this.httpOptions);
   }
 
   alterarSenha(email: string, oldPassword: string, newPassword: string){
@@ -61,7 +71,7 @@ constructor(private http: HttpClient, private urlService: UrlServiceService) { }
       oldPassword,
       newPassword
     };
-    return this.http.post<boolean>(`${this.baseUrl}/ChangePassword`, body);
+    return this.http.post<boolean>(`${this.baseUrl}/ChangePassword`, body, this.httpOptions);
   }
 
   alterarEmail(email: string, newEmail: string){
@@ -69,21 +79,21 @@ constructor(private http: HttpClient, private urlService: UrlServiceService) { }
       email,
       newEmail
     };
-    return this.http.post<boolean>(`${this.baseUrl}/ChangeEmail`, body);
+    return this.http.post<boolean>(`${this.baseUrl}/ChangeEmail`, body, this.httpOptions);
   }
 
   excluirUsuario(email: string){
     const body = {
       email
     };
-    return this.http.post<boolean>(`${this.baseUrl}/DeleteUser`, body);
+    return this.http.post<boolean>(`${this.baseUrl}/DeleteUser`, body, this.httpOptions);
   }
 
   verifyRole(userName){
     const body = {
       userName
     };
-    return this.http.post<string>(`${this.baseUrl}/VerificarRole`, body);
+    return this.http.post<string>(`${this.baseUrl}/VerificarRole`, body, this.httpOptions);
   }
 
   editarLoja(cpf: string, cliente: number){
@@ -91,7 +101,19 @@ constructor(private http: HttpClient, private urlService: UrlServiceService) { }
       Cpf: cpf,
       idClienteSelecionado: cliente
     };
-    return this.http.post<string>(`${this.baseUrl}/${'ChangeLojaUsuario'}`, body);
+    return this.http.post<string>(`${this.baseUrl}/${'ChangeLojaUsuario'}`, body, this.httpOptions);
+  }
+
+  testBackEnd(){
+    return this.http.get<string>(`${this.baseUrl}/${'TestBackEnd'}`, this.httpOptions);
+  }
+
+  testSql(){
+    return this.http.get<string>(`${this.baseUrl}/${'TestSql'}`, this.httpOptions);
+  }
+
+  testFirebird(){
+    return this.http.get<string>(`${this.baseUrl}/${'TestFirebird'}`, this.httpOptions);
   }
 }
 

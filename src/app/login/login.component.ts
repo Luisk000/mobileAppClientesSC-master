@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { AlertController } from '@ionic/angular';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
-
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +13,12 @@ import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-no
 })
 export class LoginComponent implements OnInit {
   model: any = {};
+  temaEscuro = true;
   constructor(public router: Router,
     private authService: AuthService,
     public toastrService: ToastrService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private usuarioService: UsuarioService
     ) { }
 
   async ngOnInit() {
@@ -30,13 +32,14 @@ export class LoginComponent implements OnInit {
   public async login() {
     await this.authService.login(this.model).subscribe(
         () => {
-
           // eslint-disable-next-line no-debugger
           this.router.navigate(['/inicio']);
         }, async (error) => {
+          console.log(error);
           const alert = await this.alertController.create({
             header:
-              'Login Inválido',
+              //'Login Inválido',
+              "erro:" + error.message,
               cssClass: 'alert',
             buttons: [
               {
@@ -67,15 +70,48 @@ export class LoginComponent implements OnInit {
       largeBody: "largeBodyTeste",
       schedule: {
         repeats: true,
-        every: "day"
-       /*  on: {
-          weekday: 4,
+        //every: "day",
+        on: {
+          weekday: 2,
           hour: 15,
-          minute: 0,
+          minute: 20,
           second: 1
-        } */
+        }
       }
     }
     LocalNotifications.schedule({notifications:[options]})
+  }
+
+  backEndData: string;
+  sqlData: string;
+  FirebirdData: string;
+  async testConnections(){
+    this.usuarioService.testBackEnd().subscribe((data) => {
+      this.backEndData = data;
+      console.log(data);
+    })
+    this.usuarioService.testSql().subscribe((data) => {
+      this.sqlData = data;
+      console.log(data);
+    })
+    this.usuarioService.testFirebird().subscribe((data) => {
+      this.FirebirdData = data;
+      console.log(data);
+    })
+
+    const alert = await this.alertController.create({
+      header:
+        //'Login Inválido',
+        "testeSql: " + this.sqlData + ", " + "testeBackEnd: " + this.backEndData + ", " + "testeFirebird: " + this.FirebirdData,
+        cssClass: 'alert',
+      buttons: [
+        {
+          text: 'Ok',
+          cssClass: 'alert-button-main',
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

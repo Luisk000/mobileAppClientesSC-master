@@ -36,9 +36,9 @@ export class CarrinhoComponent {
   pedidosCarrinho: PedidoCarrinho[];
   subscription: Subscription;
 
-  ionViewWillEnter(){
+  /* ionViewWillEnter(){
     this.start();
-  }
+  } */
 
   start() {
     this.carregou = false;

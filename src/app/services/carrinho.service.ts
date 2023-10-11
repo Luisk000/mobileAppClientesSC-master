@@ -3,7 +3,7 @@
 import { PedidoCarrinho } from './../model/pedidocarrinho.model';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Produto } from '../model/produto.model';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -13,6 +13,16 @@ import { UrlServiceService } from './url-service.service';
   providedIn: 'root'
 })
 export class CarrinhoService {
+
+  httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'*',
+        'Access-Control-Allow-Headers':'*',
+        'Access-Control-Allow-Credentials': 'true'
+    })
+  }
 
   constructor(private http: HttpClient, private urlService: UrlServiceService) { }
   private url = this.urlService.url + 'Produto';
@@ -26,11 +36,11 @@ export class CarrinhoService {
       NM_CPFUSUARIO: localStorage.getItem('cpf'),
       QT_PRODUTO: produto.qT_PRODUTO,
     };
-    return this.http.post<string>(`${this.url}/${'AdicionarCarrinho'}`, body);
+    return this.http.post<string>(`${this.url}/${'AdicionarCarrinho'}`, body, this.httpOptions);
   }
 
   getCarrinho(userCpf: string){
-    return this.http.get<PedidoCarrinho[]>(`${this.url}/${'GetCarrinho'}/${userCpf}`);
+    return this.http.get<PedidoCarrinho[]>(`${this.url}/${'GetCarrinho'}/${userCpf}`, this.httpOptions);
   }
 
   private pedidosAtualizados = new BehaviorSubject<PedidoCarrinho[]>(undefined);
@@ -46,7 +56,7 @@ export class CarrinhoService {
       NM_FANTASIA: pedidoCarrinho.nM_FANTASIA,
       NM_CPFUSUARIO: localStorage.getItem('cpf'),
     };
-    return this.http.post<PedidoCarrinho>(`${this.url}/${'RemoverCarrinho'}`, body);
+    return this.http.post<PedidoCarrinho>(`${this.url}/${'RemoverCarrinho'}`, body, this.httpOptions);
   }
 
   confirmarPedidoCab(pedido: PedidoCarrinho){
@@ -54,7 +64,7 @@ export class CarrinhoService {
       CD_CLIENTE: pedido.cD_CLIENTE,
       NM_FANTASIA: pedido.nM_FANTASIA
     };
-    return this.http.post<number>(`${this.url}/${'ConfirmarPedidoCab'}`, body);
+    return this.http.post<number>(`${this.url}/${'ConfirmarPedidoCab'}`, body, this.httpOptions);
   }
 
 
@@ -72,6 +82,6 @@ export class CarrinhoService {
       };
       body.push(prod);
     }
-    return this.http.post<string>(`${this.url}/${'ConfirmarPedidosDet'}`, body);
+    return this.http.post<string>(`${this.url}/${'ConfirmarPedidosDet'}`, body, this.httpOptions);
   }
 }

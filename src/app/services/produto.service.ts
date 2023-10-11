@@ -14,6 +14,16 @@ export class ProdutoService {
 
   constructor(private http: HttpClient, private urlService: UrlServiceService) {}
 
+  httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'*',
+        'Access-Control-Allow-Headers':'*',
+        'Access-Control-Allow-Credentials': 'true'
+    })
+  }
+
   getItem(id: number): Observable<Produto[]> {
     return this.http.get<Produto[]>(`${this.url}/${id}`);
   }
@@ -22,7 +32,7 @@ export class ProdutoService {
     const body = {
       CD_REDELOJA: localStorage.getItem('redeloja')
     };
-    return this.http.post<Produto[]>(`${this.url}/${'GetPedidosPendentes'}`, body);
+    return this.http.post<Produto[]>(`${this.url}/${'GetPedidosPendentes'}`, body, this.httpOptions);
   }
 
   getImagem(produto: Produto) {
