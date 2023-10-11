@@ -13,7 +13,6 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-  temaEscuro = true;
   constructor(public router: Router,
     private authService: AuthService,
     public toastrService: ToastrService,
